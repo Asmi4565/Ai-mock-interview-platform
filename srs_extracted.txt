@@ -1,0 +1,411 @@
+SOFTWARE REQUIREMENTSSPECIFICATION
+AI Mock Interview Platform for College Students
+Version 1.0Prepared for: FSD Mini-ProjectTechnology Stack: React, Node.js, Express.js, MongoDBDocument Status: Initial Draft — requirements to be validated with student users
+Document Control
+Item
+Details
+Project title
+AI Mock Interview Platform for College Students
+Version
+1.0
+Document type
+Software Requirements Specification (SRS)
+Intended audience
+Student developers, project guide, testers, evaluators
+Status
+Proposed requirements; subject to review and validation
+1. Introduction
+1.1 Purpose
+This document defines the proposed functional and non-functional requirements for an AI Mock Interview Platform that helps college students and fresh graduates practise job interviews, receive structured feedback on their answers, retry weak answers, and review progress across practice sessions. It is intended to guide design, implementation, testing, and project evaluation.
+1.2 Scope
+The system will provide a web-based interview practice experience. A student selects a target role and interview type, answers questions in a text-based session, receives AI-assisted feedback against a defined rubric, and can review previous sessions. The first version focuses on text input to keep the project feasible for a college mini-project.
+In scope: user registration and login; student profile; role and interview-type selection; question sessions; text answers; AI-assisted evaluation; feedback reports; retry practice; session history; basic progress dashboard.
+Out of scope for Version 1: real-time voice/video interviews; facial-expression or emotion scoring; automated hiring decisions; resume parsing; recruiter accounts; live job listings; guarantees about employability; plagiarism detection.
+AI feedback is advisory and may be inaccurate. The system must communicate that scores are practice guidance, not an objective measure of a candidate's ability.
+1.3 Intended Users
+Student: creates a profile, practises interviews, reviews feedback, and tracks practice history.
+Administrator (optional for the first implementation): manages curated question categories and reviews basic platform content.
+Project maintainer: configures the application, API credentials, and operational settings.
+1.4 Definitions and Abbreviations
+Term
+Meaning
+AI
+Artificial Intelligence; in this project, an external language-model service may generate questions or evaluate answers.
+API
+Application Programming Interface used for communication between frontend and backend.
+Interview session
+A single practice attempt containing a set of questions and the student's answers.
+Rubric
+A defined set of criteria used to structure feedback, such as relevance, clarity, completeness, and technical correctness.
+FSD
+Full Stack Development.
+MVP
+Minimum Viable Product: the smallest useful working version of the system.
+1.5 References
+This SRS follows a conventional software requirements structure inspired by IEEE-style SRS organization. It is a project draft, not a claim of formal compliance with a specific IEEE standard.
+2. Overall Description
+2.1 Product Perspective
+The application is a standalone web application with a React frontend, a Node.js/Express backend, a MongoDB database, and an optional external AI API. The browser communicates with the backend through HTTPS APIs. The backend handles authentication, persistence, validation, and AI-service calls. AI API credentials must remain on the server.
+2.2 Product Functions
+Create an account, log in, and log out.
+Maintain a student profile with target role, skills, education level, and optional project descriptions.
+Select an interview category such as HR/behavioral, technical fundamentals, or role-specific practice.
+Start a session and receive questions from a curated question bank and/or an AI service.
+Submit text answers and move through the session question by question.
+Receive structured feedback with strengths, improvement areas, and a suggested answer approach.
+Retry a question or start another session.
+Review previous sessions and view simple progress summaries.
+2.3 Operating Environment
+Client: modern desktop or mobile browser.
+Frontend: React with HTML, CSS, and JavaScript.
+Backend: Node.js and Express.js.
+Database: MongoDB.
+AI integration: external language-model API, if available and approved; otherwise the application may run in demo mode with curated questions and sample feedback.
+Development tools may include Git, npm, Postman, and a code editor.
+2.4 Constraints
+The project must be implementable within a college mini-project timeline.
+External AI usage may have quotas, rate limits, latency, or cost; the system must handle service failures gracefully.
+The first version will evaluate text answers only.
+The quality of AI feedback depends on the model, prompt design, rubric, and input quality.
+The platform must not expose API secrets in frontend code or public repositories.
+2.5 Assumptions and Dependencies
+Users have internet access and a supported browser.
+The development team can access MongoDB and, if required, an AI API.
+Students will enter accurate profile details and answer honestly.
+The team will use a limited, curated set of question categories for the MVP.
+The initial release is a learning and practice aid, not a certified assessment product.
+3. User Classes and Characteristics
+User class
+Main needs
+Permissions
+Student
+Practise interviews, receive feedback, review past sessions, manage profile.
+Manage own profile and sessions only.
+Administrator (optional MVP role)
+Maintain curated question categories and review reported content.
+Manage shared question content; no access to private answers unless explicitly required and disclosed.
+System maintainer
+Configure deployment, logs, API keys, and database.
+Operational access subject to secure handling of user data.
+4. Functional Requirements
+Each requirement has a unique identifier to support implementation and testing.
+ID
+Requirement
+Description
+Priority
+FR-01
+Registration
+The system shall allow a user to create an account using a valid email and password.
+High
+FR-02
+Authentication
+The system shall allow registered users to log in and log out securely.
+High
+FR-03
+Authorization
+The system shall restrict each student to their own profile, interview sessions, answers, and reports.
+High
+FR-04
+Profile management
+The system shall allow a student to add and update target role, education level, skills, and optional project descriptions.
+High
+FR-05
+Interview configuration
+The system shall allow a student to select an interview type, target role, and session length from supported options.
+High
+FR-06
+Question delivery
+The system shall present one question at a time and indicate progress through the session.
+High
+FR-07
+Question source
+The system shall obtain questions from a curated question bank and may request role-relevant questions from the configured AI service.
+High
+FR-08
+Answer submission
+The system shall allow the student to submit a text answer for each question and revise it before final submission.
+High
+FR-09
+Session completion
+The system shall save a session's questions, answers, timestamps, and completion status.
+High
+FR-10
+AI feedback
+For a submitted answer, the system shall request structured feedback using a defined rubric when the AI service is available.
+High
+FR-11
+Feedback structure
+Feedback shall include strengths, improvement areas, an explanation, and suggested next steps; technical answers should also be checked for conceptual correctness where feasible.
+High
+FR-12
+Failure handling
+If the AI service is unavailable or returns invalid output, the system shall show a clear message and preserve the student's answer for retry.
+High
+FR-13
+Retry practice
+The system shall allow a student to retry a question or begin a new session.
+Medium
+FR-14
+Session history
+The system shall display a list of the student's past sessions, including date, role, interview type, and status.
+High
+FR-15
+Progress dashboard
+The system shall summarize practice activity and feedback trends across completed sessions.
+Medium
+FR-16
+Delete data
+The system shall allow a student to delete their saved interview history and, where supported, request account deletion.
+Medium
+FR-17
+Question management
+If an administrator module is implemented, authorized administrators shall be able to add, edit, or deactivate curated questions.
+Low
+FR-18
+Input validation
+The system shall validate required fields, answer length, supported session options, and request formats on the backend.
+High
+FR-19
+Score explanation
+If numerical scores are displayed, the system shall show the rubric or criteria used and label scores as approximate practice feedback.
+High
+FR-20
+Consent and disclosure
+The system shall explain when answers are sent to an external AI provider and shall not send profile fields that are unnecessary for evaluation.
+High
+5. Non-Functional Requirements
+ID
+Category
+Requirement
+NFR-01 Performance
+For typical requests under normal project-demo load, common pages and database-backed actions should respond within 3 seconds, excluding external AI response time.
+NFR-02 AI response
+The interface shall indicate that evaluation is in progress and shall handle slow or failed AI responses without losing submitted answers.
+NFR-03 Security
+Passwords must be stored as secure hashes; authentication secrets and AI API keys must not be exposed in client-side code.
+NFR-04 Authorization
+Backend endpoints must enforce ownership checks for profiles, sessions, answers, and reports.
+NFR-05 Privacy
+The application shall collect only data required for the service, explain AI-provider data sharing, and avoid requesting sensitive personal information.
+NFR-06 Reliability
+A temporary AI or network failure must not corrupt previously saved sessions or silently discard an answer.
+NFR-07 Usability
+The primary interview workflow should be understandable to a first-time student, with clear progress indicators and readable feedback.
+NFR-08 Accessibility
+Forms shall have labels, keyboard-operable controls, sufficient contrast, and visible validation messages.
+NFR-09 Maintainability
+Frontend components, backend routes, data models, and AI integration code should be separated into understandable modules.
+NFR-10 Compatibility
+The application should work in current versions of major desktop browsers and use a responsive layout for mobile browsers.
+NFR-11 Scalability
+The architecture should permit additional question categories and user accounts without requiring a complete redesign; production-scale capacity is not guaranteed by the MVP.
+NFR-12 Transparency
+The interface shall state that AI feedback may be wrong or incomplete and must not be treated as a hiring decision.
+6. External Interface Requirements
+6.1 User Interface
+Landing page: purpose, supported interview types, limitations, and sign-in/register actions.
+Dashboard: start practice, recent sessions, upcoming practice goals, and progress summary.
+Profile page: education level, target role, skills, and optional project details.
+Interview setup page: role, category, and question count.
+Interview page: question text, answer editor, progress indicator, submit, and next-question controls.
+Feedback page: criteria-based feedback, strengths, improvement points, suggested approach, and retry action.
+History page: previous sessions and links to their reports.
+6.2 Software Interfaces
+Frontend-to-backend communication through JSON REST endpoints over HTTPS in deployment.
+MongoDB accessed only by the backend.
+AI provider accessed only by the backend using a server-side secret stored in environment configuration.
+6.3 Example API Endpoints
+Method
+Endpoint
+Purpose
+POST
+/api/auth/register
+Create a student account.
+POST
+/api/auth/login
+Authenticate a student.
+GET
+/api/profile
+Get the current student's profile.
+PUT
+/api/profile
+Update the current student's profile.
+GET
+/api/interview-options
+Get supported roles and interview types.
+POST
+/api/sessions
+Create a new interview session.
+GET
+/api/sessions
+List the current student's sessions.
+GET
+/api/sessions/:id
+Get one owned session and its questions/answers.
+POST
+/api/sessions/:id/answers
+Save an answer.
+POST
+/api/answers/:id/evaluate
+Request AI feedback for an answer.
+POST
+/api/answers/:id/retry
+Create or record a retry attempt.
+DELETE
+/api/sessions/:id
+Delete an owned session.
+These endpoints are proposed examples and may be adjusted during implementation. Every protected endpoint must authenticate the user and verify resource ownership.
+7. Data Requirements
+7.1 Main Data Entities
+Entity
+Example fields
+Purpose
+User
+id, name, email, passwordHash, createdAt
+Account and authentication metadata.
+StudentProfile
+userId, educationLevel, targetRole, skills[], projectDescriptions[]
+Personalization inputs supplied by the student.
+Question
+id, category, role, prompt, difficulty, active
+Curated questions; AI-generated questions may also be stored per session.
+InterviewSession
+id, userId, role, interviewType, status, startedAt, completedAt
+Groups questions and answers from one practice attempt.
+AnswerAttempt
+id, sessionId, questionText, answerText, attemptNumber, submittedAt
+Stores each answer and retry.
+Feedback
+answerAttemptId, rubricScores, strengths[], improvements[], explanation, generatedAt, providerStatus
+Stores structured AI feedback and service status.
+7.2 Data Rules
+Every student-owned record must be associated with a user ID.
+The backend must check ownership before reading, updating, or deleting student records.
+Do not store passwords in plain text.
+Avoid storing unnecessary personal information in AI prompts.
+If AI feedback is stored, record its creation time and enough context to explain which answer it evaluates.
+Define a retention and deletion approach for answers and profile data before public deployment.
+8. AI Evaluation Requirements
+8.1 Evaluation Rubric
+Criterion
+Description
+Relevance
+Does the answer address the question asked?
+Clarity and structure
+Is the explanation understandable and logically organized?
+Completeness
+Does the answer cover the main points expected for the question?
+Technical correctness
+For technical questions, are the core concepts and claims correct to the extent the system can assess them?
+Examples and reasoning
+Does the answer include useful examples, reasoning, or evidence when appropriate?
+8.2 AI Output Handling
+Request a structured response from the AI provider and validate it on the backend before saving.
+Do not rely on free-form AI text as the sole source of application control or database commands.
+If the model returns an incomplete or invalid response, show a retry option and preserve the user's answer.
+Feedback should be respectful, specific, and actionable; it should not make unsupported claims about personality, intelligence, accent, appearance, or employability.
+The model may produce inaccurate or inconsistent assessments. The UI must communicate this limitation.
+Use curated questions and sample evaluation data for development and testing when the external AI service is unavailable.
+9. Main Use Cases
+Use case
+Actor
+Basic flow
+UC-01 Register / Log in
+Student
+Student provides account details or login credentials. System validates input, authenticates the user, and opens the dashboard.
+UC-02 Configure profile
+Student
+Student enters target role, education level, skills, and optional project information. System validates and saves the profile.
+UC-03 Start interview
+Student
+Student selects a role, interview category, and session length. System creates a session and presents the first question.
+UC-04 Answer a question
+Student
+Student submits a text answer. System validates and saves it before moving to the next question or evaluation.
+UC-05 Receive feedback
+Student / AI service
+System sends the minimum required question and answer context to the AI provider, validates the structured response, and displays feedback. If the provider fails, the answer remains saved.
+UC-06 Retry an answer
+Student
+Student reviews feedback, submits a new attempt, and compares the new feedback with the previous attempt where supported.
+UC-07 Review progress
+Student
+Student opens history and views past sessions and basic summaries based on saved data.
+UC-08 Delete history
+Student
+Student requests deletion of an owned session. System verifies ownership and deletes or marks the data for deletion according to the implemented retention policy.
+10. Acceptance Criteria
+A new student can register, log in, and log out.
+A student can create and update a profile and start a session with supported options.
+The system displays questions one at a time and saves answers to the correct session.
+A completed answer can receive rubric-based feedback when the AI service is available.
+An AI-service failure does not erase the submitted answer and produces a clear error/retry path.
+Students can view their own session history and cannot access another student's records by changing an ID in a request.
+The dashboard displays session summaries based on persisted data rather than hard-coded demo values.
+The application explains that AI feedback is advisory and may be inaccurate.
+AI credentials are kept in server-side environment variables and are not present in frontend bundles or source control.
+Core flows are tested with valid input, invalid input, unauthenticated requests, and simulated AI-service failures.
+11. Testing Strategy
+Unit tests: input validation, rubric-output parsing, and helper functions.
+API tests: registration/login, profile updates, session creation, answer saving, ownership checks, and deletion.
+Integration tests: complete interview workflow from session creation to feedback storage.
+Failure tests: AI timeout, invalid AI response, database error, and network interruption.
+Security tests: password hashing, protected routes, resource ownership, request validation, and secret handling.
+Usability tests: ask a small number of students to complete an interview and identify confusing steps.
+Manual acceptance testing: verify the criteria in Section 10 before project demonstration.
+12. Risks and Mitigations
+Risk
+Impact
+Mitigation
+AI feedback is inaccurate
+Students may learn incorrect concepts or trust a misleading score.
+Use a rubric, explain uncertainty, provide curated references where possible, and allow users to flag feedback.
+AI API cost or quota limits
+Interview evaluation may become unavailable.
+Set usage limits, handle failures, use curated questions, and provide a demo mode.
+Scope becomes too large
+The project may remain unfinished.
+Deliver text-only interviews first; defer voice, video, resume parsing, and advanced analytics.
+Privacy exposure
+Student answers or profile data may be disclosed.
+Minimize data collection, protect endpoints, keep secrets server-side, and disclose external AI processing.
+Weak user demand
+Students may not use the app after evaluation.
+Validate with student interviews and usability tests before adding advanced features.
+Misleading numerical scores
+Students may interpret scores as objective hiring predictions.
+Explain scoring criteria and label scores as approximate practice feedback.
+13. Suggested Development Milestones
+Milestone
+Deliverable
+M1 — Requirements and design
+Approved scope, use cases, wireframes, data model, and API plan.
+M2 — Core web application
+React navigation, registration/login, profile, and protected backend APIs.
+M3 — Interview workflow
+Question bank, session creation, text answers, and saved session history.
+M4 — AI feedback
+Server-side AI integration, rubric, response validation, error handling, and feedback UI.
+M5 — Progress and quality
+History dashboard, retry flow, testing, security checks, and responsive layout.
+M6 — Final delivery
+Deployment, sample demo account/data, project report, screenshots, and demonstration script.
+14. Future Enhancements (Not Required for MVP)
+Speech-to-text and voice-based mock interviews.
+Resume upload and question personalization based on selected resume sections.
+More role-specific question sets and instructor-curated rubrics.
+Optional interview practice plans based on recurring feedback themes.
+Exportable feedback reports.
+Accessibility enhancements such as adjustable reading modes and additional language support.
+These enhancements should only be added after the core text-based workflow is stable and user feedback supports the need.
+15. Open Questions for Project Review
+Which AI provider will be used, and what are its current pricing, data-retention, and rate-limit terms?
+Will the MVP require account registration, or will a limited demo mode be available?
+Which two or three target roles will be supported initially?
+Will feedback scores be numerical, descriptive, or both?
+What data-retention and account-deletion behavior will be implemented?
+Who will test the platform, and what feedback will be collected before final submission?
+Appendix A — Proposed MVP Boundary
+The minimum viable release should include authentication, a student profile, a small curated question bank, text-based interview sessions, saved answers, structured AI feedback, retry practice, and session history. The dashboard can show simple summaries. Real-time voice/video, facial analysis, recruiter portals, and automated job matching should remain out of scope unless the core system is complete and there is a clear reason to add them.
+Appendix B — Important Product Disclaimer
+The platform is intended for interview practice and educational feedback only. AI-generated feedback can be incorrect, incomplete, or inconsistent. Scores are not validated measures of employability and must not be used as the sole basis for hiring, admissions, or other high-impact decisions.
