@@ -85,6 +85,22 @@ app.use('/api', sessionRoutes);
 app.use('/api', answerRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+// Serve static frontend in production
+const clientDistPath = path.join(__dirname, '../client/dist');
+app.use(express.static(clientDistPath));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  const indexPath = path.join(clientDistPath, 'index.html');
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      next();
+    }
+  });
+});
+
 // Global 404 & Error Handling
 app.use(notFound);
 app.use(errorHandler);
