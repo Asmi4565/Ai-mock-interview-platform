@@ -1,0 +1,12 @@
+# Netlify Configuration for AI Mock Interview Platform
+
+[build]
+  base = "client"
+  publish = "dist"
+  command = "npm run build"
+
+# SPA routing redirect rule
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
