@@ -5,8 +5,16 @@
   publish = "dist"
   command = "npm run build"
 
+# Proxy all /api requests directly to the live Render backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://ai-mock-interview-platform-fsr8.onrender.com/api/:splat"
+  status = 200
+  force = true
+
 # SPA routing redirect rule
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
