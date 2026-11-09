@@ -2,6 +2,10 @@
 
 > **FSD Mini-Project | MERN Stack + AI Integration**  
 > An AI-powered mock interview practice platform designed to help college students and fresh graduates master technical and behavioral job interviews. Built strictly in accordance with the Software Requirements Specification (`docs/SRS.docx`).
+>
+> 🌐 **Live Application:** [https://lambent-dolphin-edc75d.netlify.app](https://lambent-dolphin-edc75d.netlify.app)  
+> ⚡ **Live Backend API:** [https://ai-mock-interview-platform-fsr8.onrender.com](https://ai-mock-interview-platform-fsr8.onrender.com)  
+> 🗄️ **Database:** MongoDB Atlas Cloud Cluster
 
 ---
 
